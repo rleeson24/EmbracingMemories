@@ -1,0 +1,88 @@
+﻿<div id="profile-display" class="clearfix">
+	<div style="position: fixed; text-align: center; top: -5px; z-index: 5000; display: block;" ng-if="ShowPageMessage">
+		<div id="pageErrorDiv" style="margin: 0px; left: 150px; position: relative;">
+			<growl-notifications>
+				<growl-notification ng-if="ShowPageMessage">
+					{{Message}}
+				</growl-notification>
+			</growl-notifications>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-5 col-md-push-7">
+			<div data-ng-show="model.Photos.length > 0" style="text-align: left; margin-top: 20px;">
+				<img src="" data-ng-src="/api/Photos/Content/{{model.Photos[0].Id}}" style="width:100%" />
+			</div>
+		</div>
+		<div class="col-md-7 col-md-pull-5">
+			<div class="row">
+				<div class="col-xs-12">
+					<h3>
+						<span data-ng-bind="model.FirstName + ' ' + model.MiddleName + ' ' + model.LastName"></span>
+						(<span data-ng-bind="model.Birthday | date:'MM/dd/yyyy'"></span>
+						- <span data-ng-bind="model.DateOfDeath | date:'MM/dd/yyyy'"></span>)
+						<!--a href="" data-ng-href="/Profiles/{{model.Id}}/edit"><img src="/Content/Images/pencil.png" title="Edit" /></a-->
+					</h3>
+				</div>
+
+				<div class="col-sm-12">
+					<h3>Obituary</h3>
+					<div class="profileValue" style="text-align: justify" data-ng-bind="model.Obituary"></div>
+				</div>
+
+				<div class="col-sm-12">
+					<h3>Life History and Achievements</h3>
+					<div class="profileValue" style="text-align: justify" data-ng-bind="model.LifeHistory"></div>
+				</div>
+
+				<div class="col-sm-12">
+					<div id="photos" class="table">
+						<div data-ng-show="model.Photos.length == 0">
+							<p>No photos have been added</p>
+						</div>
+						<div data-ng-repeat="photo in model.Photos" class="photo">
+							<img src="" data-ng-src="/api/Photos/Content/{{photo.Id}}" />
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-12">
+					<div data-ng-hide="model.Links.length == 0">
+						<label>Links:</label>
+						<div id="links" class="table">
+							<div data-ng-hide="model.Links.length == 0">
+								<label for="linkLabel" class="col_1">Label</label>
+								<label for="linkLabel" class="col_2">Url</label>
+							</div>
+							<div data-ng-repeat="link in model.Links" class="link">
+								<div class="col_1" data-ng-bind="link.Label"></div>
+								<a class="col_2" data-ng-href="link.Url" data-ng-bind="link.Url"></a>
+								<div style="clear:both"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12">
+					<label>Audio Files:</label>
+					<div data-ng-repeat="audioFile in model.AudioFiles" class="photo pull-xs-left" style="position: relative; display: inline-block;">
+						<audio controls>
+							<source src="" data-ng-src="{{audioFile.Url}}" type="audio/mpeg">
+							Your browser does not support the audio element.
+						</audio>
+					</div>
+				</div>
+
+
+				<div class="col-md-12" data-ng-show="model.Videos.length > 0">
+					<label>Videos:</label>
+					<div id="photos" class="table">
+						<div data-ng-repeat="videoFile in model.Videos" class="photo pull-xs-left" style="position: relative; display: inline-block;">
+							<iframe ng-src="{{videoFile.Url}}" width="320" height="240" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.ShowUnsubscribe = false;
+    ViewBag.BaseUrl = String.Format( "{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content( "~" ) );
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="google-site-verification" content="P4Aut6MyJEYF_55X17OzVKZIBeT91IskgG4IwhG82o4" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+</head>
+<body style="font-family: Helvetica, Arial, sans-serif; font-size: 14px;">
+    <table style="background-color: #34495e" width="100%">
+        <tr>
+            <td style="color: #9d9d9d;height: 50px;padding: 15px 15px;">
+                <a href="@(ViewBag.BaseUrl)" style="text-decoration: none;color: #9d9d9d; font-size: 18px; line-height: 20px;">Embracing the Memories</a>
+            </td>
+            <td>
+                <ul style="list-style:none; padding:0; margin:0; float: right!important">
+                    <li style="display:inline-block; margin-left: 15px"><a href="@(ViewBag.BaseUrl)" style="text-decoration: none; color: #bdc3c7; cursor: pointer; ">Home</a></li>
+                    <li style="display:inline-block; margin-left: 15px"><a href="@(ViewBag.BaseUrl)" style="text-decoration: none; color: #bdc3c7; cursor: pointer; ">About Us</a></li>
+                    <li style="display:inline-block; margin-left: 15px"><a href="@(ViewBag.BaseUrl)" style="text-decoration: none; color: #bdc3c7; cursor: pointer; ">Faq</a></li>
+                    <li style="display:inline-block; margin-left: 15px"><a href="@(ViewBag.BaseUrl)" style="text-decoration: none; color: #bdc3c7; cursor: pointer; ">Contact Us</a></li>
+                </ul>
+            </td>
+        </tr>
+    </table><!--/header-->
+    <div id="wrap">
+        <div style="background-color: white; padding-right: 30px; padding-left: 30px;">
+            @RenderBody()
+        </div>
+    </div>
+    <table style="background-color: #222; color: #9d9d9d; padding-top:30px; padding-bottom:30px" width="100%">
+        <tr>
+            <td width="50%" style="padding-left: 15px; padding-right: 15px">
+                <h4>Featured Links</h4>
+                <ul style="list-style:none; padding:0; margin:0;">
+                    <li><a href="https://www.biblegateway.com/" target="_blank">Bible Gateway</a></li>
+                    <li><a href="https://www.gotquestions.org/" target="_blank">Got Questions?.org</a></li>
+                    <li><a href="http://www.klove.com/" target="_blank">Positive and Encouraging K-Love</a></li>
+                </ul>
+            </td>
+            <td width="50%" style="padding-left: 15px; padding-right: 15px">
+                <ul style="list-style:none; padding:0; margin:0; float: right!important">
+                    <li style="display:inline-block; margin-left: 15px"><a href="@(ViewBag.BaseUrl)" style="text-decoration: none; color: #bdc3c7; cursor: pointer; ">Home</a></li>
+                    <li style="display:inline-block; margin-left: 15px"><a href="@(ViewBag.BaseUrl)" style="text-decoration: none; color: #bdc3c7; cursor: pointer; ">About Us</a></li>
+                    <li style="display:inline-block; margin-left: 15px"><a href="@(ViewBag.BaseUrl)" style="text-decoration: none; color: #bdc3c7; cursor: pointer; ">Faq</a></li>
+                    <li style="display:inline-block; margin-left: 15px"><a href="@(ViewBag.BaseUrl)" style="text-decoration: none; color: #bdc3c7; cursor: pointer; ">Contact Us</a></li>
+                </ul>
+            </td>
+        </tr>
+    </table><!--/#footer-->
+    <div style="background-color: #222; color: #9d9d9d; padding-top:30px; padding-bottom:30px" width="100%">
+        <hr />
+        <p style="vertical-align: middle;">&copy; 2015 - Embracing The Memories <a href="https://www.facebook.com/EmbracingTheMemories/?fref=ts"><img src="~/Content/Images/FB-f-Logo__blue_29.png" /></a></p>
+
+        @if ( ViewBag.ShowUnsubscribe )
+        {
+            <center>If you did not request this email, click <a href="@(ViewBag.BaseUrl)MailingList/Unsubscribe" style="text-decoration: none; color: #bdc3c7; cursor: pointer;">here</a> to unsubscribe.</center>
+        }
+    </div>
+</body>
+</html>

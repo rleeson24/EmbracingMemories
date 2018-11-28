@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNet.Identity
+
+@AntiForgery.GetHtml()
+<ul class="nav navbar-nav navbar-right" ng-controller="AccountOperationsController as accountOperations">
+    @if ( Request.IsAuthenticated )
+    {
+        <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">@("Hello " + User.Identity.GetUserName() + "!") <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li>@Html.ActionLink( "My Account", "Index", "Manage", routeValues: new { area = "" }, htmlAttributes: new { title = "Manage" } )</li>
+            </ul>
+        </li>
+        <li class="logout">
+            <a hreg="#" style="cursor:pointer" ng-click="Logout()">Log out</a>
+        </li>
+        if ( User.IsInRole( "CanCreateUsers" ) )
+        {
+            <li>@Html.ActionLink( "Register a new User", "Register", "Account" )</li>
+        }
+    }
+    else
+    {
+        <li>@Html.ActionLink( "Register", "Register", "Account" )</li>
+        <li class="login">@Html.ActionLink( "Log in", "Login", "Account" )</li>
+    }
+</ul>

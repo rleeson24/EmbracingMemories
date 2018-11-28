@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Object>
+@{
+	ViewBag.Title = "Bind Profile to QR plaque";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-non-bindable>
+	<div id="bindableDiv" data-ng-controller="BindQrCodeController">
+		<div class="row">
+			<div class="col-md-12">
+				<h3 data-i18n="_Bind_BindQrCodeHeading_"></h3>
+				<ul>
+					<li id="errorMessages" class="text-danger" data-ng-repeat="error in Errors">{{error}}</li>
+				</ul>
+				<p id="success" data-ng-show="showSaveComplete" data-i18n="_Bind_CodeSuccessfullyBound_"></p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h4 data-i18n="_Bind_UnassignedProfilesHeader_"></h4>
+				<table class="table table-hover table-striped">
+					<thead>
+						<tr>
+							<th data-i18n="_Bind_BindGridNameHeaderText_"></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="profile in model">
+							<td>{{profile.FirstName}} {{profile.MiddleName}} {{profile.LastName}}</td>
+							<td>
+								<button ng-click="BindToCode(profile)" data-i18n="_Bind_BindButtonText_" ng-disabled="disableButtons"></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<link href="~/Content/Site.css" rel="stylesheet" />
+	<link href="~/AngularApp/ngFader-master/CSS/ngFader.min.css" rel="stylesheet" />
+
+	@section scripts {
+		<script src="~/AngularApp/Profiles/Scripts/BindQrCodeViewModel.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-touch.js"></script>
+		<script src="~/AngularApp/ngFader-master/ngFader.js"></script>
+	}
+	@section jsCode {
+		var bindQrCode = angular.module('bindQrCode', ['common', 'ngAnimate', 'ngTouch', 'ngFader', 'localization'])
+		.value({
+		data: (function () {
+		return @Html.Raw(Json.Encode(Model));
+		}
+		)()
+		})
+		.value({ QrGuid: '@ViewBag.QrGuid'})
+		.controller('BindQrCodeController', ['$scope', '$http', '$window', 'data', 'QrGuid', 'authService', BindQrCode.BindQrCodeViewModel]);
+		angular.bootstrap(document.getElementById("bindableDiv"), ['bindQrCode']);
+	}

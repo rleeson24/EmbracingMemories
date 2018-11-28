@@ -1,0 +1,19 @@
+﻿<h4>Use another service to log in.</h4>
+<hr />
+<div class="message-info" ng-show="externalLogins.length === 0">
+    <p>
+        There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=226949">this article</a>
+        for details on setting up this ASP.NET application to support logging in via external services.
+    </p>
+</div>
+<div ng-show="externalLogins.length > 0">
+    <fieldset id="socialLoginList">
+        <p>
+            <span ng-repeat="client in externalLogins">
+                <button title="Log in using your {{client.Name}} account" ng-click="loginToExternalProvider(client.Url)">
+                    {{client.Name}}
+                </button>
+            </span>
+        </p>
+    </fieldset>
+</div>

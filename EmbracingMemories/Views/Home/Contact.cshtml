@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Contact";
+}
+
+<div class="row" id="contactForm" data-ng-controller="ContactUsViewModel">
+    <div class="col-md-offset-3 col-md-6">
+        <div id="input-form" class="clearfix input-form-contact">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Get In Touch!</h1>
+                    <p>Please provide as much information as possible for us to help you with your enquiry</p>
+                </div>
+                <div class="col-md-12">
+                    <ul>
+                        <li id="errorMessages" class="text-danger" data-ng-repeat="error in Errors">{{error}}</li>
+                    </ul>
+                    <p id="success" data-ng-show="IsSuccess">Thanks for your message! We will get back to you ASAP!</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="name">Name: <span class="required">*</span></label>
+                    <input type="text" placeholder="John Doe" required="required" autofocus="autofocus" data-ng-model="model.Name" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="email">Email Address: <span class="required">*</span></label>
+                    <input type="email" placeholder="johndoe@example.com" required="required" data-ng-model="model.EmailAddress" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="telephone">Telephone: </label>
+                    <input type="tel" data-ng-model="model.Phone" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="enquiry">Enquiry: </label>
+                    <select id="enquiry" name="enquiry" data-ng-model="model.EnquiryType">
+                        <option value="general">General</option>
+                        <option value="sales">Sales</option>
+                        <option value="support">Support</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="message">Message: <span class="required">*</span></label>
+                    <textarea placeholder="Your message must be greater than 20 characters" required="required" data-minlength="20" data-ng-model="model.Message"></textarea>
+
+                    <span id="loading"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="submit-button" data-ng-click="Submit()">Submit</button>
+                    <p id="req-field-desc"><span class="required">*</span> indicates a required field</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <address>
+                        <strong>Support:</strong>   <a href="mailto:Support@embracingthememories.com">Support@embracingthememories.com</a><br />
+                        <strong>President:</strong> <a href="mailto:jason@embracingthememories.com">jason@embracingthememories.com</a>
+                    </address>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/AngularApp/Profiles/Scripts/Models.js"></script>
+}
+@section jsCode {
+    siteModule.controller('ContactUsViewModel', ['$scope', '$http', '$window', Application.ContactUsController] );
+ //   angular.bootstrap(document.getElementById("contactForm"), ['contactUs']);
+}

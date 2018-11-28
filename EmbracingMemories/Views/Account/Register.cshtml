@@ -1,0 +1,141 @@
+﻿@{
+	ViewBag.Title = "Register";
+}
+
+<div class="form-horizontal" ng-controller="RegisterViewModel" style="padding-top:20px">
+	<div class="col-xs-12 col-md-offset-3 col-md-8">
+		@Html.AntiForgeryToken()
+		<h4>Create a new account.</h4>
+
+		@if (!User.IsInRole("Admin"))
+		{
+			<p data-ng-show="!IsSuccess">This registration page is for individuals only.  If you want to register your business, contact Jason at <a href="mailto:jason@embracingthememories.com">jason@embracingthememories.com</a></p>
+		}
+		<hr />
+		<p class="message-success" ng-show="IsSuccess">
+			@if (!User.IsInRole("Admin"))
+			{
+				@:Check your email and confirm your account, you must be confirmed before you can log in.  Add support@embracingthememories.com to your safe-senders list.  If you do not receive the email, check your spam folder and mark as Not Spam if found there to make sure you receive your email updates from us.
+			}
+			else
+			{
+				@:User has been created.
+			}
+		</p>
+		<div class="form-group" data-ng-show="!IsSuccess">
+			<ul>
+				<li id="errorMessages" class="text-danger" data-ng-repeat="error in Errors">{{error}}</li>
+			</ul>
+			<div class="form-group">
+				<div class="col-md-10">
+					<label>Email</label>
+					<input type="text" class="form-control" ng-model="EmailAddress" data-ng-disabled="RequestInProgress" />
+				</div>
+			</div>
+			@if (User.IsInRole("Admin"))
+			{
+				<div class="form-group">
+					<div class="col-md-10">
+						<label>Role code</label>
+						<select class="form-control" ng-model="RoleCode" data-ng-disabled="RequestInProgress">
+							<option value="archive">Archive User</option>
+							<option value="business">Business User</option>
+							<option value="basic">Basic User</option>
+						</select>
+					</div>
+				</div>
+			}
+			else
+			{
+				<div class="form-group">
+					<div class="col-md-10">
+						<label>Password</label>
+						<input type="password" class="form-control" ng-model="Password" data-ng-disabled="RequestInProgress" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-10">
+						<label>Confirm Password</label>
+						<input type="password" class="form-control" ng-model="PasswordConfirmation" data-ng-disabled="RequestInProgress" />
+					</div>
+				</div>
+			}
+			<div class="form-group">
+				<div class="col-md-10">
+					<label data-i18n="_Register_FirstName_"></label>
+					<input type="text" class="form-control" ng-model="FirstName" data-ng-disabled="RequestInProgress" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10">
+					<label data-i18n="_Register_LastName_"></label>
+					<input type="text" class="form-control" ng-model="LastName" data-ng-disabled="RequestInProgress" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10">
+					<label data-i18n="_Register_Company_"></label>
+					<input type="text" class="form-control" ng-model="Company" data-ng-disabled="RequestInProgress" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10">
+					<label data-i18n="_Register_AddressLine1_"></label>
+					<input type="text" class="form-control" ng-model="AddressLine1" data-ng-disabled="RequestInProgress" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10">
+					<label data-i18n="_Register_AddressLine2_"></label>
+					<input type="text" class="form-control" ng-model="AddressLine2" data-ng-disabled="RequestInProgress" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10">
+					<label data-i18n="_Register_City_"></label>
+					<input type="text" class="form-control" ng-model="City" data-ng-disabled="RequestInProgress" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10">
+					<label data-i18n="_Register_State_"></label>
+					<select class="form-control" ng-model="State" data-ng-disabled="RequestInProgress" ng-options="option.Abbreviation as option.Name for option in StatesList">
+						<option value="">Select State...</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10">
+					<label data-i18n="_Register_PostalCode_"></label>
+					<input type="text" class="form-control" ng-model="PostalCode" data-ng-disabled="RequestInProgress" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10">
+					<label data-i18n="_Register_Country_"></label>
+                    <select id="country" name="country" class="form-control" data-ng-model="Country" data-ng-disabled="RequestInProgress">
+                        <option value="CA">Canada</option>
+                        <option value="MX">Mexico</option>
+                        <option value="US">United States</option>
+                    </select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10">
+					<label data-i18n="_Register_Phone_"></label>
+					<input type="text" class="form-control" ng-model="Phone" data-ng-disabled="RequestInProgress" placeholder="555-555-5555" phone-formatter />
+				</div>
+			</div>
+			<div class="col-md-10">
+				<button class="btn btn-default" ng-click="registerInternalUser()" data-ng-disabled="RequestInProgress">Register</button>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts {
+<script src="~/AngularApp/Scripts/Geography.js"></script>
+<script src="~/AngularApp/Account/RegisterViewModel.js"></script>
+}
+@section jsCode {
+	siteModule.value('usStates', Geography.UsStatesList).controller('RegisterViewModel', ['$scope', 'usStates', 'authService', Account.RegisterViewModel]);
+}

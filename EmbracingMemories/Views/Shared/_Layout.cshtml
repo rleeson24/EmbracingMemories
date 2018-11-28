@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="google-site-verification" content="P4Aut6MyJEYF_55X17OzVKZIBeT91IskgG4IwhG82o4" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>@ViewBag.Title</title>
+	@Styles.Render("~/Content/css")
+	<script type="text/javascript">
+		if (!('Promise' in window))
+		{
+			var ES6Shim = document.createElement("script");
+			ES6Shim.setAttribute("src", "\\scripts\\core-js.shim.min.js");
+			document.head.appendChild(ES6Shim);
+		}
+	</script>
+</head>
+<body data-ng-app="appMain" style="background: url(/Content/Images/background-tile.png) grey repeat">
+	<div id="main-nav" class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				@Html.ActionLink("Embracing the Memories", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+					<li>@Html.ActionLink("About", "About", "Home", new { area = "" }, null)</li>
+					<li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, null)</li>
+					@if (Request.IsAuthenticated)
+					{
+						<li><a href="/Profiles">Profiles</a></li>
+						<li><a href="/Archive">Archive</a></li>
+					}
+					@if (User.IsInRole("Admin"))
+					{
+						<li>@Html.ActionLink("Add User", "Register", "Account")</li>
+					}
+				</ul>
+				@Html.Partial("_LoginPartial")
+			</div>
+		</div>
+	</div>
+	<div id="wrap">
+		<div class="container body-content" style="background-color: white;">
+			@RenderBody()
+		</div>
+	</div>
+	<footer style="background-color: #222; color: #9d9d9d">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<hr />
+				</div>
+			</div>
+			<div>
+				<div class="row">
+					<div class="col-md-4">
+						<h4>Featured Links</h4>
+						<ul class="list-unstyled">
+							<li><a href="https://www.biblegateway.com/" target="_blank">Bible Gateway</a></li>
+							<li><a href="https://www.gotquestions.org/" target="_blank">Got Questions?.org</a></li>
+							<li><a href="http://www.klove.com/" target="_blank">Positive and Encouraging K-Love</a></li>
+						</ul>
+					</div>
+					<div class="col-md-4">
+						<img src="~/Content/Images/EZBS Logo.png" style="width:150px" />
+						<img src="~/Content/Images/FrankRoeFurniture.png" style="width:150px" />
+					</div>
+					<div class="col-md-4">
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<hr />
+						<p style="vertical-align: middle;">&copy; 2015 - Embracing The Memories <a href="https://www.facebook.com/EmbracingTheMemories/?fref=ts"><img src="~/Content/Images/FB-f-Logo__blue_29.png" /></a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	@Scripts.Render("~/bundles/modernizr")
+	@Scripts.Render("~/bundles/jquery")
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
+	<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+	@Scripts.Render("~/bundles/application")
+	@Scripts.Render("~/bundles/bootstrap")
+
+	<!-- Global Site Tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107146192-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments) };
+		gtag('js', new Date());
+
+		gtag('config', 'UA-107146192-1');
+	</script>
+
+	<script>
+		_stripePublicKey = '@System.Configuration.ConfigurationSettings.AppSettings["StripePublicKey"]';
+		var commonModule = angular.module('common', ['ngCookies', 'LocalStorageModule', 'ngRoute', 'blockUI', 'growlNotifications', 'ui.bootstrap'])
+			.factory('authService', ['$http', '$q', '$location', '$window', 'localStorageService', Application.AuthenticationService])
+			.config(["$httpProvider", "$sceDelegateProvider", function ($httpProvider, $sceDelegateProvider) {
+				$sceDelegateProvider.resourceUrlWhitelist([
+				  // Allow same origin resource loads.
+				  'self',
+				  // Allow loading from our assets domain.  Notice the difference between * and **.
+				  'https://localhost:44300/**']);
+				$sceDelegateProvider.resourceUrlWhitelist([
+				  // Allow same origin resource loads.
+				  'self',
+				  // Allow loading from our assets domain.  Notice the difference between * and **.
+				  'https://embracingthememories.com/**']);
+				$httpProvider.defaults.transformResponse.push(function (responseData) {
+					Application.ConvertDateStringsToDates(responseData);
+					return responseData;
+				});
+			}])
+			.config(function (blockUIConfig) {
+				blockUIConfig.templateUrl = '/AngularApp/angular-block-ui/angular-block-ui.ng.html';
+			}).directive('phoneFormatter', Application.PhoneFormatter);
+
+		angular.module('localization', [])
+			.factory('localize', ['$http', '$rootScope', '$window', '$filter', Application.LocalizationService])
+			.directive('i18n', ['localize', function (localize) {
+				var i18nDirective = {
+					restrict: "EAC",
+					updateText: function (elm, token) {
+						var values = token.split('|');
+						if (values.length >= 1) {
+							// construct the tag to insert into the element
+							var tag = localize.getLocalizedString(values[0]);
+							// update the element only if data was returned
+							if ((tag !== null) && (tag !== undefined) && (tag !== '')) {
+								if (values.length > 1) {
+									for (var index = 1; index < values.length; index++) {
+										var target = '{' + (index - 1) + '}';
+										tag = tag.replace(target, values[index]);
+									}
+								}
+								// insert the text into the element
+								elm.text(tag);
+							};
+						}
+					},
+
+					link: function (scope, elm, attrs) {
+						scope.$on('localizeResourcesUpdated', function () {
+							i18nDirective.updateText(elm, attrs.i18n);
+						});
+
+						attrs.$observe('i18n', function (value) {
+							i18nDirective.updateText(elm, attrs.i18n);
+						});
+					}
+				};
+
+				return i18nDirective;
+			}]);
+		var siteModule = angular.module('appMain', ['common', 'localization'])
+			.controller('AccountOperationsController', ['$scope', '$http', '$window', 'authService', 'localStorageService', Application.AccountOperationsController]);
+	</script>
+	@RenderSection("scripts", required: false)
+	<script>
+		@RenderSection("jsCode", required: false)
+	</script>
+</body>
+</html>

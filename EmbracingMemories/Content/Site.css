@@ -1,0 +1,376 @@
+﻿
+html, body, #wrap {
+	height: 100%;
+}
+
+body {
+	padding-top: 50px;
+	padding-bottom: 20px;
+	min-height: 100%;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+	padding-left: 15px;
+	padding-right: 15px;
+	display: inline-block;
+	min-height: 100%;
+	padding-bottom: 18em;
+}
+
+/* CLEAR FIX */
+.body-content:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+/* Hides from IE-mac \*/
+* html .body-content {
+	height: 1%;
+}
+.body-content {
+	display: block;
+}
+/* End hide from IE-mac */
+
+body > #wrap {
+	height: auto;
+	min-height: 100%;
+}
+
+input[type="button" i]:disabled, input[type="submit" i]:disabled, input[type="reset" i]:disabled, input[type="file" i]:disabled::-webkit-file-upload-button, button:disabled, select:disabled, keygen:disabled, optgroup:disabled, option:disabled, select[disabled] > option {
+	color: graytext;
+}
+/*
+input, select {
+	height: 1.5em;
+}*/
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+	max-width: 280px;
+}*/
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+
+#input-form {
+    background-color: #8CCFFF;
+    /*width:465px;*/
+    /*min-width: 465px;*/
+    padding: 20px;
+    /*margin: 50px auto;*/
+    /*border: 6px solid #8FB5C1;*/
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    position: relative;
+}
+
+	#input-form h1 {
+		font-size: 42px;
+	}
+
+	#input-form h2 {
+		margin-bottom: 15px;
+		font-style: italic;
+		font-weight: normal;
+	}
+
+	#input-form input,
+	#input-form select,
+	#input-form textarea,
+	#input-form label {
+		font-size: 15px;
+		margin-bottom: 2px;
+	}
+
+	#input-form input,
+	#input-form select,
+	#input-form textarea {
+		/*width:450px;*/
+		width: 90%;
+		max-width: none;
+		border: 1px solid #CEE1E8;
+		margin-bottom: 20px;
+		/*padding:4px;*/
+	}
+
+		#input-form input[type=checkbox] {
+			width: auto;
+		}
+
+	#input-form button {
+		margin-bottom: 20px;
+		border-radius: 6px;
+	}
+
+	#input-form input:focus,
+	#input-form select:focus,
+	#input-form textarea:focus {
+		border: 1px solid #AFCDD8;
+		background-color: #EBF2F4;
+	}
+
+	#input-form textarea {
+		height: 150px;
+		resize: none;
+	}
+
+	#input-form label {
+		display: block;
+	}
+
+	#input-form .required {
+		font-weight: bold;
+		color: #F00;
+	}
+
+
+	#input-form #submit-button:hover {
+		background-color: #A6CFDD;
+	}
+
+	#input-form #submit-button:active {
+		position: relative;
+		top: 1px;
+	}
+
+	#input-form #loading {
+		width: 32px;
+		height: 32px;
+		background-image: url(/Content/Images/loading.gif);
+		display: block;
+		position: absolute;
+		right: 130px;
+		bottom: 16px;
+		display: none;
+	}
+
+	#input-form .table input,
+	#input-form .table select,
+	#input-form .table textarea {
+		min-width: initial;
+		float: left;
+	}
+
+	#input-form .table {
+		margin-bottom: auto;
+	}
+
+		#input-form .table label {
+			float: left;
+		}
+
+.input-form-contact {
+    background-color: transparent !important;
+}
+
+.input-form-archive {
+    background-color: transparent !important;
+}
+/*#links .link {
+	padding:13px;
+	border: 3px solid #8FB5C1;
+	-moz-border-radius:15px;
+	-webkit-border-radius:15px;
+	border-radius:15px;
+}*/
+
+#links .col_1 {
+	width: 25%;
+	margin-right: 1em;
+}
+
+#links .col_2 {
+	width: 60%;
+}
+
+#errors {
+	border: solid 1px #E58E8E;
+	padding: 10px;
+	margin: 25px 0px;
+	display: block;
+	width: 437px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	background: #FFE6E6 url(/Content/Images/cancel_48.png) no-repeat 405px center;
+	display: none;
+}
+
+	#errors li {
+		padding: 2px;
+		list-style: none;
+	}
+
+		#errors li:before {
+			content: ' - ';
+		}
+
+	#errors #info {
+		font-weight: bold;
+	}
+
+		#errors #info:before {
+			content: '';
+		}
+
+#success {
+	border: solid 1px #83D186;
+	padding: 25px 10px;
+	margin: 25px 0px;
+	display: block;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	background: #D3EDD3 url(/Content/Images/accepted_48.png) no-repeat right;
+	font-weight: bold;
+}
+
+	#errors.visible, #success.visible {
+		display: block;
+	}
+
+#req-field-desc {
+	font-style: italic;
+}
+
+/* Remove box shadow firefox, chrome and opera put around required fields. It looks rubbish. */
+input:required, textarea:required {
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	-o-box-shadow: none;
+	box-shadow: none;
+}
+
+/* Normalize placeholder styles */
+
+/* chrome, safari */
+::-webkit-input-placeholder {
+	color: #CCC;
+	font-style: italic;
+}
+
+/* mozilla */
+input:-moz-placeholder, textarea:-moz-placeholder {
+	color: #CCC;
+	font-style: italic;
+}
+
+/* ie (faux placeholder) */
+input.placeholder-text, textarea.placeholder-text {
+	color: #CCC;
+	font-style: italic;
+}
+
+#profile-display h3 {
+	font: 15px/24px 'montserrat-bold', sans-serif;
+	color: #0C3012;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	margin-bottom: 12px;
+}
+
+input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	border: solid transparent;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	-o-transform: translate(250px,-50px) scale(1);
+	-moz-transform: translate(-300px,0) scale(4);
+	direction: ltr;
+	cursor: pointer;
+	border-width: 0 0 100px 200px;
+}
+
+.clear {
+	clear: both;
+}
+
+.photo img {
+	max-width: 200px;
+	max-height: 200px;
+	float: left;
+	padding-right: 1em;
+}
+
+growl-notifications {
+	position: absolute;
+	text-align: center;
+	z-index: 1000;
+}
+
+growl-notifications growl-notification {
+	background: rgba(130,50,130,0.8);
+	color: white;
+	padding: 15px 30px;
+	width: 500px;
+	display: block;
+	border-radius: 5px;
+	margin-top: 15px;
+}
+
+.groupBox {
+    border: 1px solid grey;
+    border-radius: 4px 4px;
+    background-color: #8CCFFF;
+    padding: 20px;
+    margin: 50px auto;
+    /* border: 6px solid #8FB5C1; */
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.profileListItemImage {
+	width: 10em;
+	height: 12em;
+	border-radius: 5px;
+	border: solid 1px grey;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+h2.sectionHeader {
+    /*background-color: lightslategrey;*/
+    color: lightslategrey;
+    border-bottom: 4px double lightslategrey;
+    padding: 5px;
+}
+
+footer {
+	position: relative;
+	margin-top: -18em;  /* negative value of footer height */
+	height: 18em;
+	clear: both;
+}
+
+#main-nav.navbar ul.nav li.login a,
+#main-nav.navbar ul.nav li.logout a {
+    background: none repeat scroll 0 0 #3956C6;
+    border-bottom: 2px solid #391C83;
+    border-color: #3956C6 #3956C6 #391C83;
+    border-width: 2px;
+    color: #ffffff !important;
+    margin: 5px;
+    padding: 7px 15px;
+    transition: all 0.3s ease 0s;
+    border-radius: 4px;
+}

@@ -1,0 +1,36 @@
+﻿@model EmbracingMemories.Areas.QrProfiles.Models.QrProfile
+
+@{
+	ViewBag.Title = "ViewProfile";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-non-bindable>
+	<div id="profile" data-ng-controller="ViewProfileViewModel">
+		@{ Html.RenderAction("ReadOnlyView", "ProfileViews", new { area = "QrProfiles" }); }
+	</div>
+</div>
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/AngularApp/ngFader-master/CSS/ngFader.min.css" rel="stylesheet" />
+
+@section scripts {
+	<script src="~/AngularApp/Profiles/Scripts/Models.js"></script>
+	<script src="~/AngularApp/Profiles/Scripts/ViewProfileViewModel.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-touch.js"></script>
+	<script src="~/AngularApp/ngFader-master/ngFader.js"></script>
+}
+@section jsCode {
+	var profileModule = angular.module('profile', ['common','ngAnimate', 'ngTouch', 'ngFader'])
+		.value({
+					data: (function() {
+								var model = @Html.Raw(Json.Encode(Model));
+								model.Birthday = new Date(parseInt(model.Birthday.substr(6)));
+								model.DateOfDeath= new Date(parseInt(model.DateOfDeath.substr(6)));
+								return model;
+							}
+					)()
+		})
+	.controller('ViewProfileViewModel', ['$scope', '$window', '$sce', 'data', Profiles.ViewProfileViewModel]);
+	angular.bootstrap(document.getElementById("profile"), ['profile']);
+}

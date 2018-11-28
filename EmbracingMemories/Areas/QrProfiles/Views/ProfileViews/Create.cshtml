@@ -1,0 +1,254 @@
+﻿@model EmbracingMemories.Areas.Account.Models.ApplicationUser
+
+<div id="input-form" class="clearfix container-fluid" data-ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
+	<div style="position: fixed; text-align: center; top: -5px; z-index: 5000; display: block;" ng-if="ShowPageMessage">
+		<div id="pageErrorDiv" style="margin: 0px; left: 150px; position: relative;">
+			<growl-notifications>
+				<growl-notification ng-if="ShowPageMessage">
+					{{Message}}
+				</growl-notification>
+			</growl-notifications>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h4 data-i18n="_Create_RegisterProfileHeading_"></h4>
+			<ul>
+				<li id="errorMessages" class="text-danger" data-ng-repeat="error in Errors">{{error}}</li>
+			</ul>
+			<p id="success" data-ng-show="showSaveComplete" data-i18n="_Create_SaveComplete_"></p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h3 data-i18n="_Create_UserDetailHeader_"></h3>
+			<h5 data-i18n="_Create_UserDetail_"></h5>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6 form-group">
+			<div class="row">
+				<div class="col-md-6 form-group">
+					<label for="firstName" data-i18n="_Create_UserDetail_FirstNameLabel_" class="control-label"><span class="required">*</span></label>
+					<input type="text" id="firstName" name="firstName" vcard_name="vCard.FirstName" class="form-control" placeholder="John" required="required" autofocus="autofocus" data-ng-model="model.UserFirstName" />
+				</div>
+				<div class="col-md-6 form-group">
+					<label for="lastName" data-i18n="_Create_UserDetail_LastNameLabel_" class="control-label"> <span class="required">*</span></label>
+					<input type="text" id="firstName" name="firstName" vcard_name="vCard.LastName" class="form-control" placeholder="Doe" required="required" autofocus="autofocus" data-ng-model="model.UserLastName" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 form-group">
+					<label for="emailAddress" data-i18n="_Create_UserDetail_EmailAddressLabel_" class="control-label"><span class="required">*</span></label>
+					<input type="text" id="emailAddress" name="emailAddress" vcard_name="vCard.Email" class="form-control" placeholder="john" required="required" autofocus="autofocus" data-ng-model="model.UserEmail" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 form-group">
+					<label for="confirmEmail" data-i18n="_Create_UserDetail_ConfirmEmailAddressLabel_" class="control-label"><span class="required">*</span></label>
+					<input type="text" id="confirmEmail" name="confirmEmail" class="form-control" value="" placeholder="john@gmail.com" required="required" autofocus="autofocus" data-ng-model="model.UserEmailConfirmation" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 form-group">
+					<label for="phone" data-i18n="_Create_UserDetail_PhoneLabel_"><span class="required" class="control-label">*</span></label>
+					<input type="text" id="phone" name="phone" class="form-control" value="" placeholder="555-555-5555" autofocus="autofocus" data-ng-model="model.UserPhone" phone-formatter />
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-md-12 form-group">
+					<label for="addressLine1" data-i18n="_Create_UserDetail_AddressLine1Label_" class="control-label"><span class="required">*</span></label>
+					<input type="text" id="addressLine1" name="addressLine1" class="form-control" placeholder="123 State Drive" required="required" autofocus="autofocus" data-ng-model="model.UserAddressLine1" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 form-group">
+					<label for="addressLine2" data-i18n="_Create_UserDetail_AddressLine2Label_" class="control-label"></label>
+					<input type="text" id="addressLine2" name="addressLine2" class="form-control" placeholder="Apt 1" required="required" autofocus="autofocus" data-ng-model="model.UserAddressLine2" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 form-group">
+					<label for="city" data-i18n="_Create_UserDetail_CityLabel_" class="control-label"><span class="required">*</span></label>
+					<input type="text" id="city" name="city" placeholder="New York" class="form-control" required="required" autofocus="autofocus" data-ng-model="model.UserCity" />
+				</div>
+				<div class="col-md-4 form-group">
+					<label for="state" data-i18n="_Create_UserDetail_StateLabel_" class="control-label"><span class="required">*</span></label>
+					<select class="form-control" ng-model="model.UserState" data-ng-disabled="RequestInProgress" ng-options="option.Abbreviation as option.Name for option in StatesList">
+						<option value="">Select State...</option>
+					</select>
+				</div>
+				<div class="col-md-3 form-group">
+					<label for="postalCode" data-i18n="_Create_UserDetail_PostalCodeLabel_" class="control-label"><span class="required">*</span></label>
+					<input type="text" id="postalCode" name="postalCode" class="form-control" placeholder="12345" required="required" autofocus="autofocus" data-ng-model="model.UserPostalCode" />
+				</div>
+				<div class="col-md-3 form-group">
+					<label for="country" data-i18n="_Create_UserDetail_CountryLabel_" class="control-label"><span class="required">*</span></label>
+					<select id="country" name="country" class="form-control" data-ng-model="model.UserCountry">
+						<option value="CA">Canada</option>
+						<option value="MX">Mexico</option>
+						<option value="US">United States</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h3>Profile Detail</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2 form-group">
+			<label for="firstName" data-i18n="_ProfileDetail_FirstNameLabel_" class="control-label"><span class="required">*</span></label>
+			<input type="text" id="firstName" name="firstName" value="" class="form-control" placeholder="John" required="required" autofocus="autofocus" data-ng-model="model.FirstName" />
+		</div>
+		<div class="col-md-2 form-group">
+			<label for="lastName" data-i18n="_ProfileDetail_MiddleNameLabel_" class="control-label"><span class="required">*</span></label>
+			<input type="text" id="middleName" name="middleName" value="" class="form-control" placeholder="Jiffy" required="required" autofocus="autofocus" data-ng-model="model.MiddleName" />
+		</div>
+		<div class="col-md-2 form-group">
+			<label for="lastName" data-i18n="_ProfileDetail_LastNameLabel_" class="control-label"><span class="required">*</span></label>
+			<input type="text" id="lastName" name="lastName" value="" class="form-control" placeholder="Doe" required="required" autofocus="autofocus" data-ng-model="model.LastName" />
+		</div>
+		<div class="col-md-2 form-group">
+			<label for="sex" data-i18n="_ProfileDetail_GenderLabel_" class="control-label"></label>
+			<select id="sex" name="sex" data-ng-model="model.Sex" class="form-control">
+				<option value="M" data-i18n="_ProfileDetail_GenderMaleLabel_"></option>
+				<option value="F" data-i18n="_ProfileDetail_GenderFemaleLabel_"></option>
+			</select>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3 form-group">
+			<label data-i18n="_ProfileDetail_DobLabel_" class="control-label"></label>
+			<input type="date" data-ng-model="model.Birthday" class="form-control" placeholder="yyyy-MM-dd" style="width:160px" />
+		</div>
+		<div class="col-md-3" form-group>
+			<label data-i18n="_ProfileDetail_DodLabel_" class="control-label"></label>
+			<input type="date" data-ng-model="model.DateOfDeath" class="form-control" placeholder="yyyy-MM-dd" style="width:160px" />
+		</div>
+	</div>
+	@if (false)
+	{
+		<div class="row">
+			<div class="col-md-12 form-group">
+				<label for="obituary" data-i18n="_ProfileDetail_ObituaryLabel_" class="control-label"><span class="required">*</span></label>
+				<textarea id="obituary" name="obituary" value="" class="form-control" placeholder="" required="required" data-ng-model="model.Obituary"></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 form-group">
+				<label for="history" data-i18n="_ProfileDetail_LifeHistoryLabel_" class="control-label"></label>
+				<textarea id="history" name="history" class="form-control" data-ng-model="model.LifeHistory"></textarea>
+			</div>
+		</div>
+	}
+
+	@if (User.IsInRole("Admin"))
+	{
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="checkbox">
+					<label><input type="checkbox" id="chkShowPaymentForm" data-ng-model="showPaymentForm" /> <span data-i18n="_ProfileDetail_ShowPaymentFormLabel_">Show Payment Form</span></label>
+				</div>
+			</div>
+		</div>
+		<div class="row" data-ng-hide="showPaymentForm">
+			<div class="col-md-3">
+				<button id="submit-button" style="width:180px" type="submit" class="form-control" data-ng-click="saveProfile()" data-i18n="_Create_ProfileDetail_CreateButtonText_">Create</button>
+			</div>
+		</div>
+	}
+	<form method="POST" id="payment-form" @(User.IsInRole("Admin") ? "data-ng-show=showPaymentForm" : "") data-ng-submit="submitPaymentData($event)">
+		<div class="form-row">
+			<label for="card-element">
+				Credit or debit card
+			</label>
+			<div id="card-element">
+				<!-- a Stripe Element will be inserted here. -->
+			</div>
+
+			<!-- Used to display form errors -->
+			<div id="card-errors" role="alert"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<span data-i18n="_PaymentDetail_ProcessedByPara_1_"></span>$@((User.IsInRole("BasicUser") || User.IsInRole("Admin")) ? "199" : User.IsInRole("ArchiveUser") ? "159" : "199" )<span data-i18n="_PaymentDetail_ProcessedByPara_2_"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<button id="submit-button" class="form-control" style="width:180px" type="submit" data-i18n="_Create_ProfileDetail_CreateButtonText_"></button>
+			</div>
+		</div>
+	</form>
+
+	<span id="loading"></span>
+	<p id="req-field-desc"><span class="required">*</span><span data-i18n="_RequiredFieldsLabel_"></span></p>
+
+	<style type="text/css">
+		/**
+ * The CSS shown here will not be introduced in the Quickstart guide, but shows
+ * how you can use CSS to style your Element's container.
+ */
+		.StripeElement {
+			background-color: white;
+			padding: 10px 12px;
+			border-radius: 4px;
+			border: 1px solid transparent;
+			box-shadow: 0 1px 3px 0 #e6ebf1;
+			-webkit-transition: box-shadow 150ms ease;
+			transition: box-shadow 150ms ease;
+		}
+
+		.StripeElement--focus {
+			box-shadow: 0 1px 3px 0 #cfd7df;
+		}
+
+		.StripeElement--invalid {
+			border-color: #fa755a;
+		}
+
+		.StripeElement--webkit-autofill {
+			background-color: #fefde5 !important;
+		}
+	</style>
+	<!--
+	<div class="row">
+		<div class="col-md-12">
+			<h3>Payment Detail</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label>Card Number</label>
+			<div id="sq-card-number"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1">
+			<label>Expiry Date</label>
+			<div id="sq-expiration-date"></div>
+		</div>
+		<div class="col-md-1">
+			<label>Security code</label>
+			<div id="sq-cvv"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<label>Postal Code</label>
+			<div id="sq-postal-code"></div>
+		</div>
+	</div>
+	-->
+
+</div>
+
+<script type="text/javascript">
+	
+	//$(function () { Stripe.setPublishableKey('pk_test_fPKQZGeBDA84D8iwnnzJevZY'); });
+</script>

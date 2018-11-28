@@ -1,0 +1,36 @@
+﻿@{
+	ViewBag.Title = "Profiles";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="//cdn.rawgit.com/dalelotts/angular-bootstrap-datetimepicker/0.3.14/src/css/datetimepicker.css" rel="stylesheet" />
+
+@section scripts {
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+	<script type="text/javascript" src="//cdn.rawgit.com/dalelotts/angular-bootstrap-datetimepicker/0.4.0/src/js/datetimepicker.js"></script>
+	<script src="~/AngularApp/Profiles/Scripts/Models.js"></script>
+	<script src="~/AngularApp/Profiles/Scripts/QrProfileService.js"></script>
+	<script src="~/AngularApp/UploadableItems/PhotosService.js"></script>
+	<script src="~/AngularApp/UploadableItems/AudioFileService.js"></script>
+	<script src="~/AngularApp/UploadableItems/VideoFileService.js"></script>
+	<script src="~/AngularApp/Profiles/Scripts/fileUpload.js"></script>
+	<!--script src="~/AngularApp/angular-file-upload/ng-file-upload-all.min.js"></script-->
+	<script src="~/AngularApp/Profiles/Scripts/CreateProfileViewModel.js"></script>
+	<script src="~/AngularApp/Profiles/Scripts/EditProfileViewModel.js"></script>
+	<script src="~/AngularApp/Profiles/Scripts/ProfileListViewModel.js"></script>
+	<script src="~/AngularApp/Profiles/Scripts/ViewProfileViewModel.js"></script>
+	<script src="~/AngularApp/Scripts/Geography.js"></script>
+<script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+	<script src="~/AngularApp/Profiles/Scripts/app.js"></script>
+	<script src="~/AngularApp/Profiles/Scripts/RootViewModel.js"></script>
+	<!--script type="text/javascript" src="https://js.squareup.com/v2/paymentform"></script-->
+}
+@section jsCode {
+	angular.bootstrap(document.getElementById("profile"), ['profile']);
+}
+
+
+<div ng-non-bindable>
+	<div id="profile" data-ng-controller="rootViewModel">
+		<div data-ng-view></div>
+	</div>
+</div>

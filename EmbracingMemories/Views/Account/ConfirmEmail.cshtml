@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Registration Confirmation Page";
+}
+
+<div class="container-fluid" ng-controller="confirmEmailController" style="padding-top:20px">
+    <div class="col-xs-12 col-md-offset-3 col-md-6">
+        @if (!String.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="row">
+                <hgroup class="col-xs-12 title">
+                    <h4>@ViewBag.ErrorMessage</h4>
+                </hgroup>
+                <div class="col-xs-12"><button class="btn btn-default" ng-click="ResendEmailConfirmationToken()">Resend Email Confirmation Email</button></div>
+            </div>
+        }
+        else if (!String.IsNullOrEmpty(ViewBag.Message)) //Does user already have password?
+        {
+            <div class="row">
+                <div class="col-xs-12 title">
+                    <h4>@ViewBag.Message</h4>
+                </div>
+            </div>
+        }
+        else if (ViewBag.TokensMissing)
+        {
+            <label class="col-md-2 control-label">Confirmation code</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" ng-model="confirmationCode" />
+            </div>
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-default" ng-click="confirmEmailAddress()">Confirm</button>
+            </div>
+        }
+        else if (!ViewBag.HasPassword)
+        {
+            <div class="row" ng-hide="IsSuccess">
+                <div class="col-xs-12 title">
+                    <h4>Use the form below to set your password.</h4>
+                </div>
+            </div>
+            <div class="row col-xs-12 message-success" ng-hide="!IsSuccess">
+                Password set! Click <a href="~/Account/Login" title="Log in">here</a> to log in.
+            </div>
+            <div ng-hide="IsSuccess">
+                <div class="text-danger row">
+                    <ul>
+                        <li id="errorMessages" class="text-danger" data-ng-repeat="error in Errors">{{error}}</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="col-md-12">
+                        <label>Password</label>
+                        <input type="password" class="form-control" ng-model="model.Password" />
+                    </div>
+                </div>
+                <div>
+                    <div class="col-md-12">
+                        <label>Confirm Password</label>
+                        <input type="password" class="form-control" ng-model="model.PasswordConfirmation" />
+                    </div>
+                </div>
+                <div>
+                    <div class="col-md-12">
+                        <button class="btn btn-default" ng-click="setPassword()">Set Password</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts
+{
+    <script src="~/AngularApp/Account/ConfirmEmailViewModel.js"></script>
+}
+@section JsCode
+{
+    siteModule.value('keys', { Code: '@ViewBag.Code',
+    EmailAddress: '@ViewBag.EmailAddress'
+    });
+    siteModule.value('ResendEmailConfirmationTokenLink', '@ViewBag.ResendEmailConfirmationTokenLink' );
+    siteModule.controller('confirmEmailController', ['$scope','authService','keys', 'ResendEmailConfirmationTokenLink', Account.ConfirmEmailViewModel]);
+}

@@ -1,0 +1,188 @@
+﻿@{
+	// Set the layout page and page title
+	Page.Title = "Archive";
+}
+
+
+<div ng-non-bindable>
+	<div id="archive" data-ng-controller="ArchiveViewModel">
+		<div id="input-form" class="clearfix container-fluid input-form-archive">
+			<h1>@Page.Title</h1>
+			@if (User.IsInRole("ArchiveUser") || User.IsInRole("Admin"))
+			{
+				<div class="row">
+					<div class="col-md-12">
+						<div ng-show="Busy">
+							Retrieving Archive Entries...
+						</div>
+						<div ng-hide="Busy">
+							<div data-ng-repeat="profile in ListModel.ArchiveEntries" style="text-align:center;" class="row">
+								<div class="col-xs-5">
+									<h4>{{profile.FirstName}} {{profile.MiddleName}} {{profile.LastName}} {{profile.Suffix}}</h4>
+								</div>
+								<div data-ng-hide="profile.VideoUrl" class="col-xs-7" ><!--style="float:left; margin-right: .5em; margin-left: 1em;">-->
+									<button style="position: relative; overflow: hidden;" data-ng-click="setSelectedEntry(profile)">
+										Upload New Video File
+										<input type="file" name="files" multiple file-model="profile.videoFile" accept="video/mp4,video/x-m4v,video/*" />
+									</button>
+								</div>
+								<div data-ng-show="profile.VideoUrl" class="col-xs-7">
+									<iframe ng-src="{{profile.VideoUrl}}" width="320" height="240" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+									<button type="button" style="position: absolute; vertical-align: top; text-align: right; top: 0; right: -15px; width:24px; padding:0;" data-ng-click="deleteVideo(videoFile.Id)">
+										<img src="~/Content/Images/remove.png" class="img-rounded" style="padding: 0; margin: 0;" />
+									</button>
+								</div>
+								<hr style="clear:both" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-3">
+						<label for="firstName">First Name: <span class="required">*</span></label>
+						<input type="text" id="firstName" name="firstName" value="" placeholder="John" required="required" autofocus="autofocus" data-ng-model="ListModel.NewEntry.FirstName" />
+					</div>
+					<div class="col-md-2">
+						<label for="lastName">Middle Name: <span class="required">*</span></label>
+						<input type="text" id="middleName" name="middleName" value="" placeholder="Dane" required="required" autofocus="autofocus" data-ng-model="ListModel.NewEntry.MiddleName" />
+					</div>
+					<div class="col-md-3">
+						<label for="lastName">Last Name: <span class="required">*</span></label>
+						<input type="text" id="lastName" name="lastName" value="" placeholder="Doe" required="required" autofocus="autofocus" data-ng-model="ListModel.NewEntry.LastName" />
+					</div>
+					<div class="col-md-1">
+						<label for="suffix">Suffix: <span class="required">*</span></label>
+						<select id="suffix" name="suffix" data-ng-model="ListModel.NewEntry.Suffix">
+							<option>Jr.</option>
+							<option>Sr.</option>
+							<option>II</option>
+							<option>III</option>
+							<option>IV</option>
+						</select>
+					</div>
+					<div class="col-md-3">
+						<button data-ng-click="saveNew()">Save</button>
+					</div>
+				</div>
+			}
+			else
+			{
+				<p>You do not yet have access to this feature.  Please create a profile on the Profiles page or fill out the form below to sign up for an account.</p>
+
+					<form method="POST" id="payment-form" data-ng-submit="submitPaymentData($event)">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="text-danger" data-ng-bind="PaymentModel.PaymentError"></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-row">
+									<label>
+										<span>Card Number</span>
+									</label>
+									<input type="text" size="20" data-stripe="number" style="width:250px">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2">
+								<label>
+									<span>Expiration (MM/YY)</span>
+								</label>
+								<input type="text" size="2" data-stripe="exp_month" style="width:30px">
+								<span> / </span>
+								<input type="text" size="2" data-stripe="exp_year" style="width:30px">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-3">
+								<label>
+									<span>CVC</span>
+								</label>
+								<input type="text" size="4" data-stripe="cvc" style="width:50px">
+							</div>
+							<div class="col-md-3">
+								<label>
+									<span>Postal Code</span>
+								</label>
+								<input type="text" size="4" data-stripe="address_zip" style="width:100px">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								Your card will be processed through Stripe.com.  It will not be processed or stored in this system.  You will see a charge of $@(User.IsInRole("ProfileUser") ? "49" : "99") on your bill as EMBRACINGTHEMEMORIES.COM.
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<button id="submit-button" style="width:180px" type="submit">Create</button>
+							</div>
+						</div>
+					</form>
+
+					<script type="text/ng-template" id="loggingOffDialog.html">
+						<div class="modal-header">
+							<h3 class="modal-title" id="modal-title">Logging Off</h3>
+						</div>
+						<div class="modal-body" id="modal-body">
+							You have successfully registered for the Archive feature.  You will now be logged off.  When you login again, you will have full access to the Archive feature.
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-primary" type="button" ng-click="logoffDialogOk()">OK</button>
+						</div>
+					</script>
+
+					<style type="text/css">
+						.sq-input {
+							border: 1px solid rgb(223, 223, 223);
+							outline-offset: -2px;
+							margin-bottom: 5px;
+							height: 1.5em;
+						}
+
+						#sq-card-number {
+							width: 200px;
+						}
+
+						#sq-cvv {
+							width: 40px;
+						}
+
+						#sq-expiration-date {
+							width: 55px;
+						}
+
+						#sq-postal-code {
+							width: 100px;
+						}
+
+						.sq-input--focus {
+							/* how your inputs should appear when they have focus */
+							outline: 5px auto rgb(59, 153, 252);
+						}
+
+						.sq-input--error {
+							/* how your inputs should appear when invalid */
+							outline: 5px auto rgb(255, 97, 97);
+						}
+					</style>
+
+					<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+			}
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<script src="~/AngularApp/UploadableItems/VideoFileService.js"></script>
+	<script src="~/AngularApp/Profiles/Scripts/fileUpload.js"></script>
+	<script src="~/AngularApp/Archive/Models.js"></script>
+	<script src="~/AngularApp/Archive/ArchiveViewModel.js"></script>
+}
+
+@section jsCode {
+	angular.bootstrap(document.getElementById("archive"), ['archive']);
+}

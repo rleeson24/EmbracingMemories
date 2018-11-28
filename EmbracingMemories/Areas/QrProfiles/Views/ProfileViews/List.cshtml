@@ -1,0 +1,45 @@
+﻿<h3>My Profiles</h3>
+<ul>
+    <div style="position: fixed; text-align: center; top: -5px; z-index: 5000; display: block;" ng-if="ShowPageMessage">
+        <div id="pageErrorDiv" style="margin: 0px; left: 150px; position: relative;">
+            <growl-notifications>
+                <growl-notification ng-if="ShowPageMessage">
+                    {{Message}}
+                </growl-notification>
+            </growl-notifications>
+        </div>
+    </div>
+    <div ng-show="Busy">
+        Retrieving Profiles...
+    </div>
+    <ul class="list-inline">
+        <li data-ng-repeat="profile in Profiles" style="text-align:center">
+            <div class="profileListItemImage">
+                <img src="" style="max-width:10em;max-height:12em;" data-ng-hide="profile.Photos.length == 0" data-ng-src="/api/Photos/Content/{{profile.Photos.length > 0 ? profile.Photos[0].Id : ''}}" />
+                <span data-ng-show="profile.Photos.length == 0">No Photo</span>
+            </div>
+            <div>
+                {{profile.FirstName}} {{profile.MiddleName}} {{profile.LastName}}
+            </div>
+            <div>
+                <span>
+                    <a href="#" data-ng-href="/Profiles/{{profile.Id}}">View</a>
+                </span>
+                <span>
+                    @if (User.IsInRole("BusinessUser") || User.IsInRole("Admin") || User.IsInRole("ProfileUser"))
+                    {
+                        @:&nbsp;|&nbsp;<a href="#" data-ng-href="/Profiles/{{profile.Id}}/edit">Edit</a>
+                    }
+                </span>
+            </div>
+        </li>
+
+        <li style="text-align:center">
+            <div class="profileListItemImage">
+                <button style="width:100%;height:100%" data-ng-click="createNew()">Create</button>
+            </div>
+            <div>&nbsp;<br />&nbsp;</div>
+        </li>
+        
+    </ul>
+    </div>

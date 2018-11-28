@@ -1,0 +1,10 @@
+﻿@model System.String
+@{
+    ViewBag.Title = "Generic";
+    ViewBag.ShowUnsubscribe = false;
+    Layout = "~/Views/Email/EmailLayout.cshtml";
+}
+
+<div style="margin-top: 50px; margin-bottom: 50px;">
+    @(new HtmlString( Model ))
+</div>
