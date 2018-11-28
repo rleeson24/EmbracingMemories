@@ -316,6 +316,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Utilities\EmailService.cs" />
     <Compile Include="Utilities\FileResult.cs" />
+    <Content Include="App_Data\EmbracingMemoriesDb.mdf" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
@@ -505,7 +506,6 @@
   <ItemGroup>
     <Folder Include="AngularApp\angular-loading-bar\" />
     <Folder Include="AngularApp\Photos\" />
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\Account\Views\Shared\" />
     <Folder Include="Areas\Archive\Views\Shared\" />
     <Folder Include="Areas\Audio\Models\" />
