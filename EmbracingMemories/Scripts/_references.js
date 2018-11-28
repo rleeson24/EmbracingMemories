@@ -1,4 +1,4 @@
-﻿/// <reference path="jquery-3.2.1.js" />
+﻿/// <reference path="jquery-3.3.1.js" />
 /// <autosync enabled="true" />
 /// <reference path="../angularapp/angular-block-ui/angular-block-ui.min.js" />
 /// <reference path="../angularapp/angular-block-ui/block-navigation.js" />
