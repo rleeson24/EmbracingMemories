@@ -257,3 +257,4 @@ ModelManifest.xml
 /EmbracingMemories/AngularApp/**/*.d.ts
 /EmbracingMemories/AppSettingsSecrets.config
 /EmbracingMemories/AppSettingsSecrets - Debug.config
+/EmbracingMemories/AppSettingsSecrets-Debug.config
